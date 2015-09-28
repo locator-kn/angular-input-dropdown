@@ -17,8 +17,8 @@ angular.module('inputDropdown', []).directive('inputDropdown', [function() {
           'ng-mousedown="dropdownPressed()"' +
           'ng-class="{\'active\': activeItemIndex === $index}"' +
           '>' +
-        '<span ng-if="item.readableName">{{item.readableName}}</span>' +
-        '<span ng-if="!item.readableName">{{item}}</span>' +
+        '<span ng-if="item[displayProperty]">{{item[displayProperty]}}</span>' +
+        '<span ng-if="!item[displayProperty]">{{item}}</span>' +
       '</li>' +
     '</ul>' +
   '</div>';
@@ -32,7 +32,8 @@ angular.module('inputDropdown', []).directive('inputDropdown', [function() {
       inputName: '@',
       inputPlaceholder: '@',
       filterListMethod: '&',
-      itemSelectedMethod: '&'
+      itemSelectedMethod: '&',
+      displayProperty: '='
     },
     template: templateString,
     controller: function($scope) {
@@ -44,6 +45,9 @@ angular.module('inputDropdown', []).directive('inputDropdown', [function() {
       };
     },
     link: function(scope, element) {
+      if(!scope.displayProperty) {
+        scope.displayProperty = 'readableName';
+      }
       var pressedDropdown = false;
       var inputScope = element.find('input').isolateScope();
 
@@ -69,7 +73,7 @@ angular.module('inputDropdown', []).directive('inputDropdown', [function() {
               scope.inputValue = newValue;
             }
             else {
-              scope.inputValue = newValue.readableName;
+              scope.inputValue = newValue[scope.displayProperty];
             }
           }
           else {
