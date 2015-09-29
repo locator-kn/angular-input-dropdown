@@ -10,6 +10,7 @@ angular.module('inputDropdown', []).directive('inputDropdown', [function () {
         'ng-focus="inputFocus()"' +
         'ng-blur="inputBlur($event)"' +
         'input-dropdown-validator>' +
+        '<div class="clear-value" ng-class="{visible: inputValue.length}" ng-click="inputValue = \'\'; inputChange(); setFocus();"></div>' +
         '<ul ng-show="dropdownVisible">' +
         '<li ng-repeat="item in dropdownItems"' +
         'ng-click="selectItem(item)"' +
@@ -87,6 +88,10 @@ angular.module('inputDropdown', []).directive('inputDropdown', [function () {
                     }
                 }
             });
+
+            scope.setFocus = function() {
+                element.find('input').focus();
+            };
 
             scope.setActive = function (itemIndex) {
                 scope.activeItemIndex = itemIndex;
