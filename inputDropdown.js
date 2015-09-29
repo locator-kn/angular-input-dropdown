@@ -33,7 +33,8 @@ angular.module('inputDropdown', []).directive('inputDropdown', [function() {
       inputPlaceholder: '@',
       filterListMethod: '&',
       itemSelectedMethod: '&',
-      displayProperty: '='
+      displayProperty: '=',
+      maxItems: '='
     },
     template: templateString,
     controller: function($scope) {
@@ -100,7 +101,11 @@ angular.module('inputDropdown', []).directive('inputDropdown', [function() {
           var promise = scope.filterListMethod({userInput: scope.inputValue});
           if (promise) {
             promise.then(function(dropdownItems) {
-              scope.dropdownItems = dropdownItems;
+              if(!scope.maxItems) {
+                scope.dropdownItems = dropdownItems;
+              } else {
+                scope.dropdownItems = dropdownItems.splice(0, scope.maxItems);
+              }
             });
           }
         }
