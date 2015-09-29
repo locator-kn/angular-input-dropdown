@@ -1,6 +1,7 @@
 .input-dropdown {
   display: inline-block;
   position: relative;
+  width: 100%;
 }
 
 .input-dropdown input[type='text'] {
