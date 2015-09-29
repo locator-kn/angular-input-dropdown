@@ -55,6 +55,10 @@ angular.module('inputDropdown', []).directive('inputDropdown', [function() {
       scope.activeItemIndex = 0;
       scope.inputValue = '';
       scope.dropdownVisible = false;
+
+      if(scope.maxItems) {
+        scope.defaultDropdownItems = scope.defaultDropdownItems.splice(0, scope.maxItems);
+      }
       scope.dropdownItems = scope.defaultDropdownItems || [];
 
       scope.$watch('dropdownItems', function(newValue, oldValue) {
